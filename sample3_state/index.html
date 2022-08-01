@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Sample3 - state</title>
+    
+</head>
+<body>
+    <div id = "timer-example"> </div>
+    
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>    
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>  
+
+    <script type = "text/babel">
+    class Timer extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { seconds: 0 };
+        }
+
+        tick() {
+            this.setState(state => ({
+            seconds: state.seconds + 1
+            }));
+        }
+
+        //component 생명주기 - 자세한 문서는 아래 사이트 참조
+
+        //https://ko.reactjs.org/docs/react-component.html#componentdidmount
+
+        //컴포넌트가 마운트된 직후, 즉 트리에 삽입된 직후에 호출됩니다. 
+        //DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다. 
+        //외부에서 데이터를 불러와야 한다면, 네트워크 요청을 보내기 적절한 위치입니다.
+        //componentDidMount()에서 즉시 setState()를 호출하는 경우도 있습니다. 
+        //이로 인하여 추가적인 렌더링이 발생하지만, 브라우저가 화면을 갱신하기 전에 이루어질 것입니다. 
+        //이 경우 render()가 두 번 호출되지만, 사용자는 그 중간 과정을 볼 수 없을 것입니다. 
+        //이런 사용 방식은 성능 문제로 이어지기 쉬우므로 주의가 필요합니다. 
+        //대부분의 경우, 앞의 방식을 대신하여 constructor() 메서드에서 초기 state를 할당할 수 있습니다. 
+        //하지만 모달(Modal) 또는 툴팁과 같이 렌더링에 앞서 DOM 노드의 크기나 위치를 먼저 측정해야 하는 경우 이러한 방식이 필요할 수 있습니다.        
+        componentDidMount() {
+            this.interval = setInterval(() => this.tick(), 1000);
+        }
+
+
+        componentWillUnmount() {
+            clearInterval(this.interval);
+        }
+
+        render() {
+            return (
+            <TimeTitle> {this.state.seconds}  </TimeTitle>
+            );
+        }
+    }
+
+    const TimeTitle = (props) =>  {
+        const timeSecond = props.children[1];
+        console.log(timeSecond);
+        let strTimeInfo;
+        if(timeSecond < 60)
+            strTimeInfo = 'Seconds : ' + String(timeSecond);
+        else if(timeSecond < 3600)
+            strTimeInfo =  'Minutes:' + String(Math.floor(timeSecond/60)) + ' Seconds :' + String(timeSecond%60);
+        else 
+            strTimeInfo =  'Hours:' + String(Math.floor(timeSecond/3600)) + ' Minutes:' + String(Math.floor(timeSecond/60)) + ' Seconds :' + String(timeSecond%60);
+
+        return (
+            <div> {strTimeInfo} </div>
+        );
+    }
+    
+    ReactDOM.render(
+        <Timer />,
+        document.getElementById('timer-example')
+    );
+
+    </script>
+</body>
+</html>

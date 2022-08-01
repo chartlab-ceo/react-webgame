@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Sample2 - hello display</title>
+    
+</head>
+<body>
+    <div id = "shopping-list"> </div>
+    
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>    
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>  
+
+    <script type = "text/babel">
+    class ShoppingList extends React.Component {
+        render() {
+            return (
+            <div className="shopping-list">
+                <h1>Shopping List for {this.props.name}</h1>
+                <ul>
+                <li>Instagram</li>
+                <li>WhatsApp</li>
+                <li>Oculus</li>
+                </ul>
+            </div>
+            );
+        }
+    }
+
+    ReactDOM.render(
+        <ShoppingList name = "homeplus"/>,
+        document.getElementById('shopping-list')
+      );
+
+    //  return React.createElement('div', {className: 'shopping-list'},
+    //  React.createElement('h1', /* ... h1 children ... */),
+    //  React.createElement('ul', /* ... ul children ... */)
+    //  );
+     
+    </script>
+</body>
+</html>
